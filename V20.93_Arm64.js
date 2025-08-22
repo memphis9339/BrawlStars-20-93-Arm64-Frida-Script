@@ -64,14 +64,16 @@ function main() {
   });
 
   //client secret patcher
-  Interceptor.attach(base.add(0x3be018), {
-    onEnter(args) {
-      this.buffer = args[0];
-    },
-    onLeave(retval) {
-      this.buffer.writeByteArray(ClientSecretKey);
-    },
-  });
+  Interceptor.replace(
+    base.add(0x3be018),
+    new NativeCallback(
+      function (buf) {
+        buf.writeByteArray(ClientSecretKey);
+      },
+      "void",
+      ["pointer"]
+    )
+  );
 
   /* misc */
 
@@ -96,3 +98,4 @@ function main() {
 rpc.exports.init = function () {
   main();
 };
+
