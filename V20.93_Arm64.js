@@ -91,11 +91,14 @@ function main() {
   });
 
   // arxan killer
-  RuntimePatcher.jmp(base.add(0x337668), base.add(0x338400));
-  RuntimePatcher.jmp(base.add(0x399724), base.add(0x39a488));
+  RuntimePatcher.jmp(base.add(0x337668), base.add(0x338400)); //crc check
+  RuntimePatcher.jmp(base.add(0x399724), base.add(0x39a488));//login message encode
+  RuntimePatcher.jmp(base.add(0x51bdac), base.add(0x51cdc4)); // ulti button activated
+  RuntimePatcher.jmp(base.add(0x2b9a88), base.add(0x2Bab98)); // input system update 
 }
 
 rpc.exports.init = function () {
   main();
 };
+
 
